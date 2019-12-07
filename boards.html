@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" href="./img/favicon.png" type="image/x-icon">
+    <title>Quadros | Trello</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" 
+        integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" 
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="./style/bootstrap.min.css">
+    <link rel="stylesheet" href="./style/base.css">
+    <link rel="stylesheet" href="./style/boards.css">
+</head>
+<body>
+    <header>
+        <div class="header__container">
+            <div class="header__container--left">
+                <button class="btn btn-icon">
+                    <i class="fas fa-home"></i>
+                </button>
+            </div>
+            <div class="header__container--center">
+                <img src="./img/trello-white.png" alt="">
+            </div>
+            <div class="header__container--right">
+                <div class="header__container--userName" id="userName"></div>
+                <button class="btn btn-icon" id="logoutClick">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+    <main class="logado">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="boards-title"><i class="far fa-user"></i> Quadros Pessoais</h1>
+                </div>
+            </div>
+            <div class="row" id="boardsList">
+            </div>
+        </div>
+    </main>
+    <div class="modal fade" id="modalBoardDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Exclui Board</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Esta opção remove o board e todos os lists e cards contidos nele.<br>Tem certeza que quer excluir este board?</p>
+                </div>
+                <div class="modal-footer deleteModalFooter">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                    <button type="button" class="btn btn-danger" id="btnConfirmDelete">Sim, quero excluir.</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalBoardName" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Alterar título do board</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" class="form-board" id="nameForm">
+                        <div class="form-group">
+                            <label for="boardName_name">Insira um novo nome</label>
+                            <input required type="text" class="form-control" id="boardName_name" placeholder="Cópia do Trello">
+                        </div>
+                        <div class="form-submit">
+                            <button type="submit" class="btn btn-block btn-outline-primary">
+                                Confirmar alteração
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalBoardColor" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Alterar cor do Board</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" class="form-board" id="colorForm">
+                        <p>Escolha uma cor de fundo</p>
+                        <div class="form-colors">
+                            <div class="form-color">
+                                <input name="boardChangeColor" type="radio" id="colorBlueChange" value="colorBlue">
+                                <label for="colorBlueChange"></label>
+                            </div>
+                            <div class="form-color">
+                                <input name="boardChangeColor" type="radio" id="colorYellowChange" value="colorYellow">
+                                <label for="colorYellowChange"></label>
+                            </div>
+                            <div class="form-color">
+                                <input name="boardChangeColor" type="radio" id="colorGreenChange" value="colorGreen">
+                                <label for="colorGreenChange"></label>
+                            </div>
+                            <div class="form-color">
+                                <input name="boardChangeColor" type="radio" id="colorRedChange" value="colorRed">
+                                <label for="colorRedChange"></label>
+                            </div>
+                            <div class="form-color">
+                                <input name="boardChangeColor" type="radio" id="colorPurpleChange" value="colorPurple">
+                                <label for="colorPurpleChange"></label>
+                            </div>
+                            <div class="form-color">
+                                <input name="boardChangeColor" type="radio" id="colorPinkChange" value="colorPink">
+                                <label for="colorPinkChange"></label>
+                            </div>
+                            <div class="form-color">
+                                <input name="boardChangeColor" type="radio" id="colorLightGreenChange" value="colorLightGreen">
+                                <label for="colorLightGreenChange"></label>
+                            </div>
+                            <div class="form-color">
+                                <input name="boardChangeColor" type="radio" id="colorLightBlueChange" value="colorLightBlue">
+                                <label for="colorLightBlueChange"></label>
+                            </div>
+                            <div class="form-color">
+                                <input name="boardChangeColor" type="radio" id="colorGreyChange" value="colorGrey">
+                                <label for="colorGreyChange"></label>
+                            </div>
+                        </div>
+                        <div class="form-submit">
+                            <button type="submit" class="btn btn-block btn-outline-primary">
+                                Confirmar alteração
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalNovoBoard" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Novo Quadro</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" class="form-board" id="boardsForm">
+                        <div class="form-group">
+                            <label for="boardForm_nome">Adicionar título do quadro</label>
+                            <input required type="text" class="form-control" id="boardForm_nome" placeholder="Cópia do Trello">
+                        </div>
+                        <p>Escolha uma cor de fundo</p>
+                        <div class="form-colors">
+                            <div class="form-color">
+                                <input name="boardColor" type="radio" id="colorBlue" value="colorBlue">
+                                <label for="colorBlue"></label>
+                            </div>
+                            <div class="form-color">
+                                <input name="boardColor" type="radio" id="colorYellow" value="colorYellow">
+                                <label for="colorYellow"></label>
+                            </div>
+                            <div class="form-color">
+                                <input name="boardColor" type="radio" id="colorGreen" value="colorGreen">
+                                <label for="colorGreen"></label>
+                            </div>
+                            <div class="form-color">
+                                <input name="boardColor" type="radio" id="colorRed" value="colorRed">
+                                <label for="colorRed"></label>
+                            </div>
+                            <div class="form-color">
+                                <input name="boardColor" type="radio" id="colorPurple" value="colorPurple">
+                                <label for="colorPurple"></label>
+                            </div>
+                            <div class="form-color">
+                                <input name="boardColor" type="radio" id="colorPink" value="colorPink">
+                                <label for="colorPink"></label>
+                            </div>
+                            <div class="form-color">
+                                <input name="boardColor" type="radio" id="colorLightGreen" value="colorLightGreen">
+                                <label for="colorLightGreen"></label>
+                            </div>
+                            <div class="form-color">
+                                <input name="boardColor" type="radio" id="colorLightBlue" value="colorLightBlue">
+                                <label for="colorLightBlue"></label>
+                            </div>
+                            <div class="form-color">
+                                <input name="boardColor" type="radio" id="colorGrey" value="colorGrey">
+                                <label for="colorGrey"></label>
+                            </div>
+                        </div>
+                        <div class="form-submit">
+                            <button type="submit" class="btn btn-block btn-outline-primary">
+                                Adicionar Quadro
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="alert" id="trelloAlert" role="alert"></div>
+
+    <script src="./app/lib/jquery.min.js"></script>
+    <script src="./app/lib/bootstrap.min.js"></script>
+    <script src="./app/service/FactoryXHR.js"></script>
+    <script src="./app/controller/BoardsController.js"></script>
+    <script src="./app/service/BoardsService.js"></script>
+    <script src="./app/service/LoginService.js"></script>
+    <script src="./app/view/BoardsView.js"></script>
+    <script src="./app/view/LoginView.js"></script>
+    <script>
+        if (!window.localStorage.getItem('token')) {
+            window.location.href = "index.html"
+        }
+
+        const controller = new BoardsController('#boardsForm', '#colorForm', '#nameForm', '#boardsList')
+        controller.init()
+    </script>
+</body>
+</html>

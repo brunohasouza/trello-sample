@@ -1,0 +1,24 @@
+
+
+.login__container--header {
+    padding-bottom: 15px;
+}
+
+.login__container--header h1 {
+    color: white;
+}
+
+.login__container--header a {
+    color:#81bbdd;
+}
+
+.login__container--logo {
+    margin: 2rem 0;
+    text-align: center;
+    height: 3rem;
+}
+
+.login__container--logo img {
+    height: 100%;
+    width: auto;
+}
