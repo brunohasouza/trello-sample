@@ -149,15 +149,11 @@ class CardService {
 
     listaCommentsCard = (cardId) => new Promise((resolve, reject) => {
         const url = `${this._baseURL}/${this._token}/${cardId}/comments`
-        const data = {
-            card_id: cardId,
-            token: this._token
-        }
 
         FactoryXHR.request(
             url,
-            'POST',
-            data,
+            'GET',
+            null,
             r => resolve(r),
             e => reject(e)
         )
