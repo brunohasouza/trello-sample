@@ -63,10 +63,10 @@ class CardService {
         )
     })
 
-    alterarDataCard = (cardId, data) => new Promise((resolve, reject) => {
+    alterarDataCard = (cardId, date) => new Promise((resolve, reject) => {
         const url = `${this._baseURL}/newdata`
         const data = {
-            data,
+            data: date,
             card_id: cardId,
             token: this._token
         }
@@ -161,15 +161,11 @@ class CardService {
 
     listaTagsCard = (cardId) => new Promise((resolve, reject) => {
         const url = `${this._baseURL}/${this._token}/${cardId}/tags`
-        const data = {
-            card: cardId,
-            token: this._token
-        }
 
         FactoryXHR.request(
             url,
-            'POST',
-            data,
+            'GET',
+            null,
             r => resolve(r),
             e => reject(e)
         )

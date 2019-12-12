@@ -1,12 +1,32 @@
 class BoardView {
-    constructor(listContainer) {
+    constructor(listContainer, tagContainer) {
         this._container = document.querySelector(listContainer)
+        this._tagContainer = document.querySelector(tagContainer)
+    }
+
+    drawTags = (tags) => {
+        return tags.map(tag => `
+            <div class="cardInfo-tag">
+                <input type="radio" name="cardTag" value="${tag.id}" id="tag-${tag.tag}">
+                <label for="tag-${tag.tag}" style="background-color: ${tag.color}">${tag.tag.toUpperCase()}</label>
+            </div>
+        `).join('')
+    }
+
+    drawTagInCard = (tags) => {
+        return tags.map(tag => `
+            <div class="cardInfo-tag" data-tag-color="${tag.color}" data-tag-label="${tag.tag}">
+                <span style="background-color: ${tag.color}"></span>
+            </div>            
+        `).join('')
     }
 
     drawCards = (cards) => {
         return cards.map(card => `
-            <div class="cardList-card card" onclick="controller.openModalCard(${card.trelloListId}, '${card.trello_list.name}', ${card.id}, '${card.name}')">
+            <div class="cardList-card card" draggable="true" onclick="controller.openModalCard(${card.trelloListId}, '${card.trello_list.name}', ${card.id}, '${card.name}', '${card.data}')">
                 <div class="card-body">
+                    <div class="tagsInCard" id="tagList-${card.id}">
+                    </div>
                     <p>${card.name}</p>
                 </div>
             </div>        
@@ -69,9 +89,14 @@ class BoardView {
         document.querySelector('#comentariosList').innerHTML = this.drawComments(comments.reverse(), username)
     }
 
-    updateModalCardInfos = (listName, cardName) => {
+    updateModalCardInfos = (listName, cardName, date, tagColor, tagLabel) => {
         document.querySelector('#cardInfoTitle').innerHTML = `<i class="fab fa-trello"></i><span>${cardName}</span>`
         document.querySelector('#cardInfoSubtitle').innerHTML = `na lista <strong>${listName}</strong>`
+        document.querySelector('#cardInfoDate').innerHTML = date
+
+        document.querySelector('#cardInfoTags').innerHTML = `
+            <span style="background-color: ${tagColor}">${tagLabel.toUpperCase()}</span>
+        `
     }
 
     setBoardTitle = (title) => {
@@ -91,6 +116,16 @@ class BoardView {
         const id = `#cardList-${listId}`
 
         document.querySelector(id).innerHTML = this.drawCards(cards)
+    }
+
+    updateTags = (tags) => {
+        this._tagContainer.innerHTML = this.drawTags(tags)
+    }
+
+    updateCardTags = (cardId, tags) => {
+        const id = `#tagList-${cardId}`
+
+        document.querySelector(id).innerHTML = this.drawTagInCard(tags)
     }
 
     showAlert = (variant, message) => {

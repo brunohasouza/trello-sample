@@ -124,6 +124,10 @@
                         <div class="form-group">
                             <label for="cardNew_name">Insira um nome para o cartão</label>
                             <input required type="text" class="form-control" id="cardNew_name" placeholder="Ex: Criar tela de login">
+                        </div>                        
+                        <p>Escolha uma prioridade</p>
+                        <div class="form-group" id="cardNewTags">
+
                         </div>
                         <div class="form-submit">
                             <button type="submit" class="btn btn-block btn-outline-primary">
@@ -145,23 +149,121 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <h6 class="text-muted" id="cardInfoSubtitle"></h6>
+                    <div class="cardInfo-bodyHeader">
+                        <h6 class="text-muted" id="cardInfoSubtitle"></h6>
+                        <span class="text-muted" id="cardInfoDate"></span>
+                    </div>
                     <div class="cardInfo-container">
                         <div class="cardInfo-left">
                             <div class="modalDivider">
-                                <i class="fas fa-stream"></i>
+                                <i class="fas fa-tags"></i>
+                                <span>Tag</span>
+                            </div>
+                            <div class="cardInfo-tags" id="cardInfoTags">
+                            </div>
+                            <div class="modalDivider">
+                                <i class="far fa-comments"></i>
                                 <span>Comentários</span>
                             </div>
                             <form action="" class="form-card" id="cardCommentForm">
                                 <textarea required type="text" class="form-control" id="cardInfo_comment" placeholder="Escrever um comentário..."></textarea>
-                                <button type="submit" class="btn btn-light">
+                                <button type="submit" class="btn btn-success">
                                     Comentar
                                 </button>
                             </form>
                             <div id="comentariosList">
                             </div>
                         </div>
+                        <div class="cardInfo-right">
+                            <div class="modalDivider">
+                                <i class="fas fa-stream"></i>
+                                <span>Ações</span>
+                            </div>
+                            <div class="cardInfo-options">
+                                <button class="btn btn-block btn-sm btn-outline-dark" id="btnEditCardName">
+                                    <i class="far fa-edit"></i>
+                                    <span>Alterar Nome</span>
+                                </button>
+                                <button class="btn btn-block btn-sm btn-outline-dark" id="btnEditCardDate">
+                                    <i class="far fa-calendar-alt"></i>
+                                    <span>Alterar Data</span>
+                                </button>
+                                <button class="btn btn-block btn-sm btn-outline-dark" id="btnRemoveCard">
+                                    <i class="far fa-trash-alt"></i>
+                                    <span>Excluir Card</span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalCardName" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Alterar nome do cartão</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" class="form-board" id="renameCardForm">
+                        <div class="form-group">
+                            <label for="cardRename_name">Insira um novo nome</label>
+                            <input required type="text" class="form-control" id="cardRename_name" placeholder="Ex: Criar tela de cadastro">
+                        </div>
+                        <div class="form-submit">
+                            <button type="submit" class="btn btn-block btn-outline-primary">
+                                Confirmar alteração
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalCardDate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Alterar data do cartão</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" class="form-board" id="dateCardForm">
+                        <div class="form-group">
+                            <label for="cardRename_date">Insira uma nova data</label>
+                            <input required type="date" class="form-control" id="cardRename_date" placeholder="Ex: 12/12/2019">
+                        </div>
+                        <div class="form-submit">
+                            <button type="submit" class="btn btn-block btn-outline-primary">
+                                Confirmar alteração
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalCardDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Excluir Cartão</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Esta opção remove o cartão e os comentários contidos nele.<br>Tem certeza que quer excluir este cartão?</p>
+                </div>
+                <div class="modal-footer deleteModalFooter">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                    <button type="button" class="btn btn-danger" id="btnConfirmDeleteCard">Sim, quero excluir.</button>
                 </div>
             </div>
         </div>
@@ -199,11 +301,14 @@
 
         const controller = new BoardController(
             params.get('id'), 
-            '#listContainer', 
+            '#listContainer',
+            '#cardNewTags',
             '#newListForm',
             '#renameListForm',
             '#newCardForm',
-            '#cardCommentForm'
+            '#cardCommentForm',
+            '#renameCardForm',
+            '#dateCardForm'
         )
         controller.init()
     </script>

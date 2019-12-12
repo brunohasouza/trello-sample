@@ -164,7 +164,7 @@
 }
 
 .cardInfo-right {
-    width: 8rem;
+    width: 10rem;
     flex-shrink: 0;
     flex-wrap: 0;
 }
@@ -172,7 +172,7 @@
 .cardInfo-left {
     flex: 1;
     width:100%;
-    padding-right: .5rem;
+    padding-right: 1rem;
 }
 
 .form-card {
@@ -209,6 +209,118 @@
     margin-bottom:.25rem;
 }
 
+.cardInfo-bodyHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.cardInfo-bodyHeader span {
+    display: inline-block;
+    font-weight: 600;
+    font-size: .875rem;
+    line-height: 1.25rem;
+    flex-shrink: 0;
+    flex-grow: 0;
+}
+
+.cardInfo-bodyHeader h6 {
+    padding-right: 1rem;
+    flex: 1;
+    width: 100%;
+    margin: 0;
+}
+
+#cardNewTags {
+    display: flex;
+    padding-top: .5rem;
+    margin-bottom: 0;
+}
+
+.cardInfo-tag input{
+    display: none;
+}
+
+.cardInfo-tag {
+    flex: 1;
+    padding: 0 .25rem;
+    max-width: 6.5rem;
+}
+
+
+.cardInfo-tag label, .cardInfo-tag span, #cardInfoTags span {
+    width: 100%;
+    border-radius: .75rem;
+    cursor: pointer;
+    position: relative;
+    font-size: .75rem;
+    line-height: 1rem;
+    padding: .25rem 0;
+    text-align: center;
+    font-weight: bold;
+    color: black;
+}
+
+#cardInfoTags span {
+    display: inline-block;
+    width: 6.5rem;
+    cursor: default;
+}
+
+.tagsInCard {
+    padding-bottom: .25rem;
+}
+
+.tagsInCard .cardInfo-tag span {
+    display: inline-block;
+    line-height: .5rem;
+    padding: 0;
+    height: .5rem;
+    border-radius: .25rem;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.tagsInCard .cardInfo-tag {
+    padding: 0;
+    width: 5rem;
+    height: .5rem;
+    position: relative;
+}
+
+.cardInfo-tag label::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: .75rem;
+    background-color: rgba(0, 0, 0, .1);
+    transition: all 0.2s;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.cardInfo-tag label:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+.cardInfo-tag input:checked + label::after {
+    background-color: rgba(0, 0, 0, .3);
+    opacity: 1;
+    visibility: visible;
+}
+
+.cardInfo-options .btn {
+    text-align: left;
+}
+
+.cardInfo-options .btn i {
+    margin-right: .5rem;
+}
 main.logado.colorBlue { background-color: #0079BF; }
 main.logado.colorYellow { background-color: #D29034; }
 main.logado.colorGreen { background-color: #519839; }
