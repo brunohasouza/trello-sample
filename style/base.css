@@ -14,6 +14,11 @@ main.logado {
     padding-top: 2.5rem;
 }
 
+main.boardOverflow {
+    display: flex;
+    flex-direction: column;
+}
+
 header {
     position: fixed;
     top: 0;
@@ -28,6 +33,10 @@ header {
     justify-content: space-between;
     padding: .25rem;
     background-color: #026AA7;
+}
+
+header.boardHeader .header__container{
+    background-color: rgba(0, 0, 0, 0.2);
 }
 
 .header__container--center {
@@ -45,6 +54,7 @@ header {
     height: 2rem;
     padding: 0;
     background-color: rgba(255, 255, 255, 0.5);
+    line-height: 2rem;
 }
 
 .btn-icon:hover {
@@ -55,6 +65,32 @@ header {
     font-size: 1rem;
     line-height: 1rem;
     color: white;
+}
+
+.btn-icon.dark {
+    background-color: transparent;
+}
+
+.btn-icon.dark:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.btn-icon.dark i {
+    color: rgba(0, 0, 0, 0.7)
+}
+
+.btn-addList {
+    text-align: left;
+    color: white;
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+.btn-addList:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.btn-addList i {
+    margin-right: .5rem;
 }
 
 .header__container--right {

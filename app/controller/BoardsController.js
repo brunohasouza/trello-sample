@@ -200,6 +200,4 @@ class BoardsController {
                 this._view.showAlert('danger', 'Erro ao listar boards do usuário')
             })
     }
-
-
 } 

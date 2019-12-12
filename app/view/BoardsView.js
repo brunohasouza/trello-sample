@@ -29,7 +29,7 @@ class BoardsView {
     appendNewBoard = (boards) => {
         return boards += `
             <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-                <div class="board newBoard"data-toggle="modal" data-target="#modalNovoBoard">
+                <div class="board newBoard" data-toggle="modal" data-target="#modalNovoBoard">
                     <span>Criar novo quadro</span>
                 </div>
             </div>        

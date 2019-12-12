@@ -4,9 +4,148 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <link rel="shortcut icon" href="./img/favicon.png" type="image/x-icon">
+    <title>Quadro | Trello</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" 
+        integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" 
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="./style/bootstrap.min.css">
+    <link rel="stylesheet" href="./style/base.css">
+    <link rel="stylesheet" href="./style/boards.css">
+    <link rel="stylesheet" href="./style/board.css">
 </head>
-<body>
+<body>    
+    <header class="boardHeader">
+        <div class="header__container">
+            <div class="header__container--left">
+                <a href="./boards.html" class="btn btn-icon">
+                    <i class="fas fa-home"></i>
+                </a>
+            </div>
+            <div class="header__container--center">
+                <img src="./img/trello-white.png" alt="">
+            </div>
+            <div class="header__container--right">
+                <div class="header__container--userName" id="userName"></div>
+                <button class="btn btn-icon" id="logoutClick">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+    <main class="logado boardOverflow">
+        <div class="container-fluid">
+            <h1 class="boardTitle"></h1>
+        </div>
+        <div id="listContainer">
+        </div>
+    </main>
+
+    <div class="modal fade" id="modalNewList" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Criar novo list</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" class="form-board" id="newListForm">
+                        <div class="form-group">
+                            <label for="listNew_name">Insira um nome para o list</label>
+                            <input required type="text" class="form-control" id="listNew_name" placeholder="Ex: To Do">
+                        </div>
+                        <div class="form-submit">
+                            <button type="submit" class="btn btn-block btn-outline-primary">
+                                Criar List
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalListDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Excluir Lista</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Esta opção remove a lista e todos os cards contidos nele.<br>Tem certeza que quer excluir esta lista?</p>
+                </div>
+                <div class="modal-footer deleteModalFooter">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                    <button type="button" class="btn btn-danger" id="btnConfirmDelete">Sim, quero excluir.</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalListName" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Alterar título da lista</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" class="form-board" id="renameListForm">
+                        <div class="form-group">
+                            <label for="listRename_name">Insira um novo título</label>
+                            <input required type="text" class="form-control" id="listRename_name" placeholder="Ex: Doing">
+                        </div>
+                        <div class="form-submit">
+                            <button type="submit" class="btn btn-block btn-outline-primary">
+                                Confirmar alteração
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     
+    <div class="alert" id="trelloAlert" role="alert"></div>
+
+    <script src="./app/lib/jquery.min.js"></script>
+    <script src="./app/lib/popper.js"></script>
+    <script src="./app/lib/bootstrap.min.js"></script>
+
+    <script src="./app/controller/BoardController.js"></script>
+
+    <script src="./app/service/FactoryXHR.js"></script>
+    <script src="./app/service/BoardsService.js"></script>
+    <script src="./app/service/ListService.js"></script>
+    <script src="./app/service/CardService.js"></script>
+    <script src="./app/service/TagService.js"></script>
+
+    <script src="./app/view/BoardView.js"></script>
+    <script src="./app/view/LoginView.js"></script>
+
+    <script>
+        const params = (new URL(document.location)).searchParams
+
+        if (!window.localStorage.getItem('token')) {
+            window.location.href = "./index.html"
+        }
+
+        if (!params.get('id')) {
+            window.location.href="./boards.html"
+        }
+
+        const controller = new BoardController(
+            params.get('id'), 
+            '#listContainer', 
+            '#newListForm',
+            '#renameListForm'
+        )
+        controller.init()
+    </script>
 </body>
 </html>
