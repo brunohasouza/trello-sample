@@ -27,6 +27,8 @@ class BoardController {
         this._selectedCardTags = []
         this._selectedCardTagColor = null
         this._selectedCardTagLabel = null
+
+        this._dragOverList = null
     }
 
     init() {
@@ -447,5 +449,42 @@ class BoardController {
         this._selectedList = id
 
         $('#modalListDelete').modal('show')
+    }
+
+    onDragStart = (ev, cardId, listId) => {
+        ev.dataTransfer.setData('cardId', cardId)
+        ev.dataTransfer.setData('listId', listId)
+    }
+
+    onDrop = (ev) => {
+        ev.preventDefault()
+
+        const cardId = ev.dataTransfer.getData('cardId')
+        const listId = ev.dataTransfer.getData('listId')
+
+        if (this._dragOverList === listId) {
+            return
+        }
+
+        this._cardService.alterarCardDeList(cardId, this._dragOverList)
+            .then(response => {
+                this._dragOverList = null
+                this._view.showAlert('success', 'Card movido com sucesso!')
+
+                return this._listService.listarListDeUmBoard()
+            })
+            .then(response => {
+                this._view.updateLists(response)
+                this.cardsByLists(response)
+            })
+            .catch(e => {
+                console.error(e)
+                this._view.showAlert('danger', 'Erro ao mover card')
+            })
+    }
+
+    onDragOver = (ev) => {
+        ev.preventDefault()
+        this._dragOverList = ev.currentTarget.dataset.listId
     }
 }

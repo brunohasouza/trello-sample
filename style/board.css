@@ -161,18 +161,55 @@
 .cardInfo-container {
     display: flex;
     align-items: flex-start;
+    flex-direction: column;
 }
 
 .cardInfo-right {
-    width: 10rem;
+    width: 100%;
     flex-shrink: 0;
     flex-wrap: 0;
+    order: 1;
+}
+
+.cardInfo-right .cardInfo-options{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.cardInfo-right .cardInfo-options .btn {
+    width: 48%;
+    margin: 0 1%;
+    margin-bottom: .5rem;
 }
 
 .cardInfo-left {
     flex: 1;
     width:100%;
     padding-right: 1rem;
+    order: 2;
+}
+
+@media screen and (min-width: 992px) {
+    .cardInfo-container {
+        flex-direction: row;
+    }
+
+    .cardInfo-left {
+        order: 1;
+    }
+
+    .cardInfo-right {
+        order: 2;
+        width: 10rem;
+    }
+
+    .cardInfo-right .cardInfo-options {
+        flex-direction: column;
+    }
+
+    .cardInfo-right .cardInfo-options .btn {
+        width: 100%;
+    }
 }
 
 .form-card {

@@ -23,7 +23,11 @@ class BoardView {
 
     drawCards = (cards) => {
         return cards.map(card => `
-            <div class="cardList-card card" draggable="true" onclick="controller.openModalCard(${card.trelloListId}, '${card.trello_list.name}', ${card.id}, '${card.name}', '${card.data}')">
+            <div class="cardList-card card" 
+                draggable="true" 
+                ondragstart="controller.onDragStart(event, ${card.id}, ${card.trelloListId})"
+                onclick="controller.openModalCard(${card.trelloListId}, '${card.trello_list.name}', ${card.id}, '${card.name}', '${card.data}')"
+            >
                 <div class="card-body">
                     <div class="tagsInCard" id="tagList-${card.id}">
                     </div>
@@ -48,7 +52,7 @@ class BoardView {
     drawLists = (lists) => {
         return lists.map(list => `
             <div class="list__element">
-                <div class="list__element--container">
+                <div class="list__element--container" ondrop="controller.onDrop(event)" ondragover="controller.onDragOver(event)" data-list-id="${list.id}">
                     <div class="list__element--title">
                         <h2>${list.name}</h2>
                         <div class="dropdown">
